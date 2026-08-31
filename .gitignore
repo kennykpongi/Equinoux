@@ -1,0 +1,56 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.vercel
+.env*.local
+
+# source media originals
+#
+# _archive/ holds the unprocessed originals the deployed assets were cut from:
+# raw camera/stock video, full-resolution JPEGs, retired fonts. 182 MB across 88
+# files, none of it imported by the app or served from /public.
+#
+# Kept out of git deliberately. Git stores every version of a binary forever, so
+# committing these would make each clone carry 180 MB that no build ever reads,
+# and removing them later means rewriting published history. They are working
+# masters, not source code — back them up in cloud storage, not here.
+_archive/

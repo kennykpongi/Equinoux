@@ -1,0 +1,407 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  /* One typeface, site-wide. `serif` and `mono` are deliberately aliased to
+     Epilogue so existing `font-serif` / `font-mono` classes stay valid but can
+     never render another family. */
+  --font-sans: var(--font-epilogue);
+  --font-mono: var(--font-epilogue);
+  --font-heading: var(--font-epilogue);
+  --font-serif: var(--font-epilogue);
+
+  /* Equinoux palette */
+  --color-navy-deep: #070D1A;
+  --color-navy-core: #0B1428;
+  --color-navy-mid: #18416E;
+  --color-navy-light: #1E5A94;
+  --color-cyan: #00D4FF;
+  --color-cyan-glow: rgba(0, 212, 255, 0.15);
+  --color-cyan-subtle: rgba(0, 212, 255, 0.06);
+  --color-orange: #FF6B35;
+  --color-orange-hover: #FF8555;
+  --color-orange-glow: rgba(255, 107, 53, 0.2);
+  --color-kolaux-white: #FAFBFC;
+  --color-kolaux-white-dim: #E2E8F0;
+  --color-kolaux-gray-100: #F1F5F9;
+  --color-kolaux-gray-200: #CBD5E1;
+  --color-kolaux-gray-400: #94A3B8;
+  --color-kolaux-gray-600: #64748B;
+  --color-kolaux-gray-800: #1E293B;
+
+  /* shadcn theme tokens */
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--paper-soft);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* ─── Equinoux · Monochrome system ───
+   Unified black-and-white aesthetic across the whole site.
+   Paper (light) canvas, ink (near-black) type/anchor, stone grey secondary.
+   The former navy/steel accents now resolve to ink so studio + case-study
+   pages inherit the same monochrome palette as the landing. */
+:root {
+  /* ── Surface tokens ──
+     Declared globally (not scoped to the landing) so /work, the case studies
+     and every future route resolve the same palette. */
+  --ink: #0b0b0b;
+  --paper: #f3f2ef;
+  --paper-soft: #eae8e3;
+  --muted: #6e6e69;
+  --line: rgba(11, 11, 11, 0.09);
+  --line-strong: rgba(11, 11, 11, 0.14);
+  --ink-inverse: rgba(243, 242, 239, 0.62); /* muted, on an ink ground */
+  --line-inverse: rgba(243, 242, 239, 0.16);
+
+  /* ── Layout system ──
+     One container for the whole site: full-bleed to 1920px with a 20px inset.
+     There is deliberately no 1280px content well — sections are meant to reach
+     the edges of the display.
+
+     The gutter used to halve to 10px on phones, which put running text and the
+     edge of the screen 10px apart: the line had nowhere to end, and reading a
+     paragraph meant tracking corner to corner. Phones now get a wider gutter
+     than the desktop, not a narrower one — the margin is what makes a column
+     legible, and a 390px screen needs proportionally more of it, not less.
+     Full-bleed media is unaffected; it opts out with `bleed`. */
+  --page-max: 1920px;
+  --page-inset: 24px;
+  --grid-gap: 10px;
+
+  /* ── Vertical rhythm ──
+     Sections are paced, not evenly spaced: `lg` separates related blocks,
+     `xl` opens the homepage bands, `2xl` separates major sections on the
+     inner pages. */
+  --space-2xs: 10px;
+  --space-xs: 20px;
+  --space-sm: 40px;
+  --space-md: 80px;
+  --space-lg: clamp(60px, 6.25vw, 120px);
+  --space-xl: clamp(100px, 10.42vw, 200px);
+  --space-2xl: clamp(120px, 12.5vw, 240px);
+
+  /* ── Fluid type scale ──
+     Ratios and tracking are matched to the reference: display type is set
+     tight (0.8 leading, heavy negative tracking) and opens up as it shrinks. */
+  --fs-display: clamp(3.125rem, 7.29vw, 8.75rem); /* 50 → 140px */
+  --ls-display: clamp(-11.2px, -0.583vw, -2.5px);
+  --fs-title: clamp(2.25rem, 4.17vw, 5rem); /* 36 → 80px */
+  --ls-title: clamp(-4.8px, -0.25vw, -1.44px);
+  --fs-statement: clamp(2rem, 3.33vw, 4rem); /* 32 → 64px */
+  --fs-sub: clamp(1.5rem, 2.08vw, 2.5rem); /* 24 → 40px */
+  --fs-lede: clamp(1rem, 0.94vw, 1.125rem); /* 16 → 18px */
+  --fs-meta: 0.875rem; /* 14px */
+
+  /* Raw brand tokens (blue → black) */
+  --eqx-navy: #0B0B0B;      /* Anchor  — primary bg or primary type (was navy) */
+  --eqx-bone: #F3F2EF;      /* Canvas  — light paper (was bone) */
+  --eqx-steel: #0B0B0B;     /* Accent  — now ink (was steel blue) */
+  --eqx-charcoal: #0B0B0B;  /* Type primary */
+  --eqx-cream: #F3F2EF;     /* Type inverse on ink */
+  --eqx-stone: #6E6E69;     /* Mid-tone — secondary type, dividers */
+
+  /* shadcn mappings */
+  --background: #F3F2EF;
+  --foreground: #0B0B0B;
+  --card: #FFFFFF;
+  --card-foreground: #0B0B0B;
+  --popover: #FFFFFF;
+  --popover-foreground: #0B0B0B;
+  --primary: #0B0B0B;
+  --primary-foreground: #F3F2EF;
+  --secondary: #0B0B0B;
+  --secondary-foreground: #F3F2EF;
+  /* `--muted` is NOT redeclared here: that name belongs to the site's
+     secondary type colour above, and a second declaration in the same block
+     would silently win and turn every muted label into a near-white. The
+     shadcn "muted surface" role maps onto --paper-soft in @theme instead. */
+  --muted-foreground: var(--muted);
+  --accent: #EAE8E3;
+  --accent-foreground: #0B0B0B;
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: rgba(11, 11, 11, 0.12);
+  --input: rgba(11, 11, 11, 0.15);
+  --ring: #0B0B0B;
+  --chart-1: #0B0B0B;
+  --chart-2: #0B0B0B;
+  --chart-3: #6E6E69;
+  --chart-4: #0B0B0B;
+  --chart-5: #6E6E69;
+  --radius: 0.625rem;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1A1A;
+  --sidebar-primary: #3D5A80;
+  --sidebar-primary-foreground: #F8F4ED;
+  --sidebar-accent: #E7E0D3;
+  --sidebar-accent-foreground: #1A1A1A;
+  --sidebar-border: rgba(26, 26, 26, 0.12);
+  --sidebar-ring: #3D5A80;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-inset: 20px;
+  }
+}
+
+/* ── Reading measure on small screens ──
+   A phone column is ~340px wide, so long-form copy runs at roughly 45–50
+   characters — comfortable. What is not comfortable is display type set at
+   desktop leading: `.t-display` at 0.88 and `.t-statement` at 1.0 leave
+   ascenders and descenders colliding once the type is small enough to wrap
+   several times. Both open up below the tablet breakpoint. */
+@media (max-width: 767px) {
+  .t-display {
+    line-height: 0.95;
+  }
+  .t-statement {
+    line-height: 1.08;
+  }
+  .t-title {
+    line-height: 0.98;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* The layout is full-bleed to 1920px; nothing should ever scroll sideways. */
+    overflow-x: hidden;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Lenis drives scrolling on the landing; `scroll-smooth` would fight it.
+     Native smooth scrolling is restored only when Lenis is disabled. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  ::selection {
+    background-color: var(--ink);
+    color: var(--paper);
+  }
+}
+
+/* ─── Editorial type utilities ───
+   Applied as classes rather than repeated inline styles so the scale stays
+   consistent and can be retuned in one place. */
+.t-display {
+  font-size: var(--fs-display);
+  /* 0.8 is the reference's desktop leading, and it only works once the type is
+     large. Below 1024px the display size drops to 50–75px, where 0.8 puts the
+     descenders of one line into the cap height of the next — so the leading
+     opens as the type shrinks. */
+  line-height: 0.88;
+  letter-spacing: var(--ls-display);
+  font-weight: 600;
+}
+@media (min-width: 1024px) {
+  .t-display {
+    line-height: 0.8;
+  }
+}
+.t-title {
+  font-size: var(--fs-title);
+  line-height: 0.88;
+  letter-spacing: var(--ls-title);
+  font-weight: 600;
+}
+.t-statement {
+  font-size: var(--fs-statement);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+.t-sub {
+  font-size: var(--fs-sub);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+.t-lede {
+  font-size: var(--fs-lede);
+  line-height: 1.35;
+}
+.t-meta {
+  font-size: var(--fs-meta);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Touch target ───
+   Standalone 14px links and icon buttons are ~16–20px tall, under the 24px
+   minimum for pointer targets. On coarse pointers this grows the hit area to
+   44px with a pseudo-element, so the target is comfortable without any of the
+   reflow that padding would cause. Not applied to links inline in running
+   text, where overlapping targets would be worse than small ones. */
+@media (pointer: coarse) {
+  .tap {
+    position: relative;
+  }
+  .tap::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    min-height: 44px;
+    height: 100%;
+    transform: translateY(-50%);
+  }
+  /* Icon-only targets are narrow as well as short. */
+  .tap-icon::after {
+    left: 50%;
+    right: auto;
+    width: 44px;
+    margin-left: -22px;
+  }
+}
+
+/* ─── Hover flip ───
+   The reference's card mechanic, measured frame by frame off a 30fps capture.
+
+   Two images stack in a track twice the frame's height, resting image on top.
+   Hovering slides the track up by exactly one frame: the second image rises
+   from below while the first leaves through the top, both moving together at
+   the same rate — it is one translate, not a wipe and not a crossfade. The
+   fitted travel is 460px in ~0.47s on an ease-out (quad fits to ~3%).
+
+   It reverses on the way out: the resting image comes back down from above.
+   Keyboard focus drives it too, so the second frame is not pointer-only. */
+.flip {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 200%;
+  transition: transform 0.5s cubic-bezier(0, 0, 0.58, 1);
+  will-change: transform;
+}
+.group:hover .flip,
+.group:focus-visible .flip {
+  transform: translateY(-50%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip {
+    transition: none;
+  }
+}
+
+/* ─── Swipeable rail ───
+   For a row that has to scroll sideways on narrow screens — the case study's
+   chapter index. The bar itself is the affordance: labels run past the edge,
+   so a scrollbar drawn across the type only adds noise. */
+.rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Roll-over link ───
+   The reference's signature link interaction: two stacked copies of the label
+   inside a clipped box, translated on hover so the second copy rolls up into
+   place. Pointer-only — on touch the label simply sits still. */
+.roll {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.roll > span {
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* The ghost is taken out of flow and parked one line below, so the clip box
+   stays exactly one line tall and the pair slides through it as a unit. */
+.roll > span[data-roll-ghost] {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+}
+@media (hover: hover) {
+  .roll:hover > span,
+  a:hover .roll > span,
+  button:hover .roll > span {
+    transform: translateY(-100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .roll > span {
+    transition: none;
+  }
+  .roll:hover > span,
+  a:hover .roll > span,
+  button:hover .roll > span {
+    transform: none;
+  }
+}
+
+/* ─── Shared interaction utility ───
+   Used by PillButton, the footer CTA, and the footer social buttons. Defined
+   globally (not just on the landing) so it also applies on /work and the
+   case-study pages, which render SiteFooter outside SiteLanding. */
+.hover-lift {
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-lift {
+    transition: none;
+  }
+  .hover-lift:hover {
+    transform: none;
+  }
+}
