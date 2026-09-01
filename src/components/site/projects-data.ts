@@ -290,7 +290,7 @@ export const PROJECTS: Project[] = [
            whole system in one pass before the page starts taking it apart. */
         id: "in-use",
         label: "In use",
-        cols: 1,
+        cols: 2,
         media: [
           {
             src: "/portfolio/kaysteph-group/merch-slide-poster.jpg",
@@ -299,6 +299,13 @@ export const PROJECTS: Project[] = [
             caption: "The identity across the delivered collection",
             ratio: "1280 / 544",
             full: true,
+          },
+          {
+            src: "/portfolio/kaysteph-group/system-reel-poster.jpg",
+            video: "/portfolio/kaysteph-group/system-reel.mp4",
+            videoSmall: "/portfolio/kaysteph-group/system-reel-sm.mp4",
+            caption: "One pass through the system: flask, profile, card, banner, site kit",
+            ratio: "4 / 5",
           },
         ],
       },
@@ -342,8 +349,20 @@ export const PROJECTS: Project[] = [
       {
         id: "environment",
         label: "In place",
-        cols: 1,
-        media: [{ src: "/portfolio/kaysteph-group/deliverable-billboard.jpg", caption: "Site billboard", ratio: "3 / 2" }],
+        cols: 2,
+        media: [
+          /* The billboard keeps the full width it had when this chapter was a
+             single column; the reel sits beneath it as one column, because a
+             9:16 frame run full-bleed is taller than the viewport. */
+          { src: "/portfolio/kaysteph-group/deliverable-billboard.jpg", caption: "Site billboard", ratio: "3 / 2", full: true },
+          {
+            src: "/portfolio/kaysteph-group/signage-reel-poster.jpg",
+            video: "/portfolio/kaysteph-group/signage-reel.mp4",
+            videoSmall: "/portfolio/kaysteph-group/signage-reel-sm.mp4",
+            caption: "Transit shelter advertising and forecourt signage",
+            ratio: "9 / 16",
+          },
+        ],
       },
       {
         id: "merchandise",
@@ -354,6 +373,13 @@ export const PROJECTS: Project[] = [
           { src: "/portfolio/kaysteph-group/merch-flask-2.jpg", caption: "Flask colourways", ratio: "5 / 4" },
           { src: "/portfolio/kaysteph-group/merch-hat.jpg", caption: "Site helmet", ratio: "5 / 4" },
           { src: "/portfolio/kaysteph-group/merch-tshirt.jpg", caption: "T-shirt", ratio: "5 / 4" },
+          {
+            src: "/portfolio/kaysteph-group/people-reel-poster.jpg",
+            video: "/portfolio/kaysteph-group/people-reel.mp4",
+            videoSmall: "/portfolio/kaysteph-group/people-reel-sm.mp4",
+            caption: "The range worn on site and in the office",
+            ratio: "4 / 5",
+          },
           { src: "/portfolio/kaysteph-group/closing.jpg", caption: "Mug", ratio: "3 / 2", full: true },
           {
             src: "/portfolio/kaysteph-group/merch-cube-poster.jpg",
